@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  test:
+    image: dockerapp
+    networks:
+      - mynet
+    ports:
+      - 80:80
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    networks:
+      - mynet
+    ports:
+      - 27017:27017
+    volumes:
+      - mylocal_data:/data/db
+
+volumes:
+  mylocal_data:
+
+networks:
+  mynet:
+    driver: bridge
